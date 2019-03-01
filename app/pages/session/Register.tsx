@@ -2,7 +2,7 @@ import React from 'react';
 import { SessionContainer, Title, Form } from './Login';
 import Input from '../../components/Input';
 import { Button } from '@material-ui/core';
-import { validator, validateRequire } from '../../utils/validator';
+import { validator, validateRequire, Errors } from '../../utils/validator';
 type Props = {
   changeType: (value: string) => void;
 };
@@ -20,7 +20,7 @@ type State = {
 
 class Register extends React.Component<Props, State> {
   state = {
-    errorEmail:false,
+    errorEmail: false,
     errorName: false,
     errorPassword: false,
     errorConfirm: false,
@@ -31,22 +31,26 @@ class Register extends React.Component<Props, State> {
   };
 
   handleChange = async (values: State) => {
-    console.log('aca')
-    const result = await validateRequire({
-      ...values
+    validateRequire(
+      {
+        ...values,
+      },
+      (result): any => {
+        this.setState({
+          ...values,
+          ...result,
+        });
+      }
+    ).then((result: Errors) => {
+      if (
+        !result.errorName &&
+        !result.errorConfirm &&
+        !result.errorEmail &&
+        !result.errorPassword
+      ) {
+        return alert('Registro Paso');
+      }
     });
-    this.setState({
-      ...values,
-      ...result
-    })
-    // if((result.requerido && values.errorEmail ) || (result.requerido && values.errorName )||result.requerido && values.errorPassword ){
-    //        this.setState({
-    //            errorEmail:true,
-    //            errorName:true,
-    //            errorPassword:true
-    //        }) 
-    //}
-
   };
 
   render() {
@@ -66,7 +70,11 @@ class Register extends React.Component<Props, State> {
             style={{ paddingTop: 10, paddingBottom: 10 }}
             width="60%"
             error={values.errorName}
-            onChange={event => this.setState({ name: event.target.value })}
+            onChange={event =>
+              validator('name', event.target.value!, result => {
+                this.setState({ errorName: result, name: event.target.value });
+              })
+            }
           />
 
           <Input
@@ -107,7 +115,7 @@ class Register extends React.Component<Props, State> {
                 'confirm',
                 event.target.value!,
                 result => {
-                  this.setState({ errorConfirm: result });
+                  this.setState({ errorConfirm: result, confirm: event.target.value });
                 },
                 values.password
               )
@@ -126,7 +134,7 @@ class Register extends React.Component<Props, State> {
               color="primary"
               variant="outlined"
               style={{ margin: 5, marginBottom: 40 }}
-              onClick={()=> this.handleChange(values)}
+              onClick={() => this.handleChange(values)}
             >
               Registro
             </Button>

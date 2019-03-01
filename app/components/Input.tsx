@@ -42,7 +42,7 @@ class Input extends React.Component<Props> {
                         color: 'red'
                     
                 }} 
-                >{typeof error === 'boolean'?'Este Campo es requerido': error}</FormHelperText>}
+                >{typeof error === 'boolean'?'Este campo es requerido': error}</FormHelperText>}
             </div>
         )
     }

@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { FormControl, Button } from '@material-ui/core';
 import Input from '../../components/Input'
+import {Errors, validator, validateRequire} from '../../utils/validator'
 
 
 type Props = {
@@ -9,12 +10,43 @@ type Props = {
 }
 
 type State = {
-    Type: string
+    errorEmail: string | boolean;
+    errorPassword: string | boolean;
+    password: string;
+    email: string;
 }
 
 class Login extends React.Component<Props, State> {
+    state = {
+        errorEmail: false,
+        errorPassword: false,
+        password: '',
+        email: '',  
+    };
+    handleChange = async (values: State) => {
+        validateRequire(
+          {
+            ...values,
+          },
+          (result): any => {
+            this.setState({
+              ...values,
+              ...result,
+            });
+          }
+        ).then((result: Errors) => {
+          if (
+            !result.errorEmail &&
+            !result.errorPassword
+          ) {
+            return alert('Login Paso');
+          }
+        });
+      };
+
     render() {
         const { changeType } = this.props
+        const values = this.state
         return (
             <SessionContainer>
                 <Title>Login</Title>
@@ -23,21 +55,37 @@ class Login extends React.Component<Props, State> {
                         placeholder="Email"
                         style={{paddingTop:10 ,paddingBottom: 10,}}
                         width='60%'
+                        error={values.errorEmail}
+                        onChange={event =>
+                            validator('email', event.target.value!, result => {
+                              this.setState({ errorEmail: result, email: event.target.value });
+                            })
+                          }
                     />
 
                     <Input
                         placeholder="Contraseña"
                         style={{paddingTop:10 ,paddingBottom: 10,}}
+                        error={values.errorPassword}
+                        type='password'
+                        onChange={event =>
+                            validator('contraseña', event.target.value!, result => {
+                              this.setState({ errorPassword: result, password: event.target.value });
+                            })
+                          }
                         width='60%'
 
                     />
                     <div style={{display:'flex', flexDirection: 'row' }}>
-                        <Button color='primary' variant='outlined' style={{margin:5}} >
-                            Ingresar
-                        </Button>
                         <Button color='primary' variant='outlined' style={{margin:5}}  onClick={()=>changeType('register')} >
                             Registro
                         </Button>
+                        <Button color='primary' variant='outlined' style={{margin:5}}
+                            onClick={() => this.handleChange(values)}
+                         >
+                            Ingresar
+                        </Button>
+                      
                     </div>
                 </Form>
 
