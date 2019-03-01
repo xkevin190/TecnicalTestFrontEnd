@@ -1,0 +1,42 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "moduleResolution": "node",
+    "module": "commonjs",
+    "jsx": "react",
+    "lib": ["dom", "esnext", "dom.iterable", "scripthost"],
+    
+    "baseUrl": "./types",
+    "paths": {
+      "*": ["*"]
+    },
+    "typeRoots": [
+      "node_modules/@types",
+      "types"
+    ],
+
+    "alwaysStrict": true,
+    "strictNullChecks": true,
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noUnusedLocals": true,
+    "suppressImplicitAnyIndexErrors": true,
+
+    "experimentalDecorators": true, 
+    "emitDecoratorMetadata": true,
+    "resolveJsonModule": true,
+
+    "sourceMap": true,
+    
+    "esModuleInterop": true
+  },
+  "files": ["app/index.tsx"],
+  "include": [
+    "app/**/*.ts",
+    "app/**/*.tsx",
+    "types/**/*.d.ts",
+    "shared/**/*"
+  ],
+  "exclude": ["dist", "node_modules"]
+}
