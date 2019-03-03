@@ -64,7 +64,7 @@ export const validator = (
   }
 };
 
-export const validateRequire = ({ ...data }: Require, cb: (data: Errors) =>Errors ) => {
+export const validateRequire = ({ ...data }: Require, cb: (data: Errors) =>Errors ):Promise<Errors> => {
   return new Promise(resolve => {
     const obj = {
       errorEmail: data.errorEmail,

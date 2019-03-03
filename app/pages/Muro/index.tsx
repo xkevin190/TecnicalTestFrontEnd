@@ -1,10 +1,11 @@
-import React from 'react';
+import * as React from 'react'
 import styled from 'styled-components'
 import {connect} from 'react-redux'
 import {ApplicationState} from '../../store/root'
 import {updateUser , Chat} from '../../store/chat'
 import ChatForms from './ChatForms'
 import Content from './Content'
+
 
  class ChatComponent extends React.Component<any> {
   render() {

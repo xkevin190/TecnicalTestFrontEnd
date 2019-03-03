@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react'
 import {Card, Typography }  from '@material-ui/core';
 import styled from 'styled-components'
 import { Chat } from '../../store/chat';

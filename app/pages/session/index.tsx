@@ -1,9 +1,10 @@
-import React from 'react'
+import * as React from 'react'
+import { RouteComponentProps } from 'react-router-dom'
 import Login from './Login'
 import Register from './Register'
 
 type Props ={
-
+   
 }
 
 enum SessionType {
@@ -15,7 +16,7 @@ type State ={
     type: string
 }
 
-class Session extends React.Component <Props , State> {
+class Session extends React.Component <RouteComponentProps<Props> , State> {
 
     state={
         type:'login' 
@@ -27,10 +28,11 @@ class Session extends React.Component <Props , State> {
 
     render(){
          const { type } = this.state
+      
         return(
             <>
-            {SessionType.login === type && <Login changeType={this.changeType }/>}
-            {SessionType.register === type && <Register changeType={this.changeType }/>}    
+             { SessionType.login === type && <Login history={this.props.history} changeType={this.changeType }/>}
+             {SessionType.register === type && <Register changeType={this.changeType }/>}     
             </>
         )
     }

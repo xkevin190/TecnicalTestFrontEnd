@@ -1,14 +1,24 @@
 import * as React from 'react'
 import styled, { injectGlobal } from 'styled-components';
+import { createBrowserHistory } from 'history';
+import { Router, Route , Switch } from 'react-router-dom';
 import Session from './pages/session'
+ import Muro from './pages/Muro'
+ 
 
+const history = createBrowserHistory();
 
 export default class Test extends React.Component {
     render(){
        return(
         
         <ContentContainer>
-          <Session />
+          <Router history={history}>
+            <Switch>
+              <Route path="/"  exact component={Session} />
+              <Route path="/" component={Muro} />
+           </Switch>
+          </Router>
         </ContentContainer>
 
        )
@@ -25,7 +35,7 @@ injectGlobal`
   }
   body {
     margin: 0;
-    background-color: #EDEEF3;
+    background-color: #dcedf0;
   }
   * {
     box-sizing: border-box;

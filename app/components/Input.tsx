@@ -1,4 +1,4 @@
-import React from 'React'
+import React from 'react'
 import { TextField, FormHelperText } from '@material-ui/core';
 
 type Props = {
@@ -15,7 +15,7 @@ type Props = {
     maxLength?: number;
     placeholder?:string
     style?: React.CSSProperties
-    width?: '10%' | '20%' | '30%' | '40%' | '50%' | '60%' | '70%' |'80%'| '90%' | '100%'
+    ContentWidth?: '10%' | '20%' | '30%' | '40%' | '50%' | '60%' | '70%' |'80%'| '90%' | '100%'
     error?: string | boolean
     // tslint:disable-next-line:no-any
     type?: any
@@ -25,9 +25,9 @@ type Props = {
 class Input extends React.Component<Props> {
     
     render(){
-        const { width , error, ...rest } = this.props
+        const { ContentWidth , error, ...rest } = this.props
         return (
-            <div style={{width:width}}>
+            <div style={{width:ContentWidth}}>
                 <TextField
                     id="outlined-dense"
                     margin="dense"

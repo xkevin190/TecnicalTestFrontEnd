@@ -1,8 +1,9 @@
-import React from 'react';
-import { SessionContainer, Title, Form } from './Login';
-import Input from '../../components/Input';
+import * as React from 'react'
 import { Button } from '@material-ui/core';
+import Input from '../../components/Input';
 import { validator, validateRequire, Errors } from '../../utils/validator';
+import { SessionContainer, Title, Form } from './Login';
+
 type Props = {
   changeType: (value: string) => void;
 };
@@ -35,11 +36,12 @@ class Register extends React.Component<Props, State> {
       {
         ...values,
       },
-      (result): any => {
+      (result):Errors => {
         this.setState({
           ...values,
           ...result,
         });
+        return result
       }
     ).then((result: Errors) => {
       if (
@@ -68,7 +70,7 @@ class Register extends React.Component<Props, State> {
           <Input
             placeholder="Nombre"
             style={{ paddingTop: 10, paddingBottom: 10 }}
-            width="60%"
+            ContentWidth="60%"
             error={values.errorName}
             onChange={event =>
               validator('name', event.target.value!, result => {
@@ -80,7 +82,7 @@ class Register extends React.Component<Props, State> {
           <Input
             placeholder="Email"
             style={{ paddingTop: 10, paddingBottom: 10 }}
-            width="60%"
+            ContentWidth="60%"
             type="email"
             error={values.errorEmail}
             onChange={event =>
@@ -93,7 +95,7 @@ class Register extends React.Component<Props, State> {
           <Input
             placeholder="Contraseña"
             style={{ paddingTop: 10, paddingBottom: 10 }}
-            width="60%"
+            ContentWidth="60%"
             type="password"
             error={values.errorPassword}
             onChange={event =>
@@ -106,7 +108,7 @@ class Register extends React.Component<Props, State> {
           <Input
             placeholder="confirmar Contraseña"
             style={{ paddingTop: 10, paddingBottom: 10 }}
-            width="60%"
+            ContentWidth="60%"
             type="password"
             disabled={values.password.length === 0}
             error={values.errorConfirm}

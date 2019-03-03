@@ -1,12 +1,13 @@
-import React from 'react'
+import * as React from 'react'
 import styled from 'styled-components'
 import { FormControl, Button } from '@material-ui/core';
-import Input from '../../components/Input'
+import {History} from 'history'
 import {Errors, validator, validateRequire} from '../../utils/validator'
-
-
+import Input from '../../components/Input'
+ 
 type Props = {
     changeType: (register : string )=>void
+    history: History
 }
 
 type State = {
@@ -17,29 +18,32 @@ type State = {
 }
 
 class Login extends React.Component<Props, State> {
+
     state = {
         errorEmail: false,
         errorPassword: false,
         password: '',
         email: '',  
     };
+
     handleChange = async (values: State) => {
         validateRequire(
           {
             ...values,
           },
-          (result): any => {
+          (result): Errors => {
             this.setState({
               ...values,
               ...result,
             });
+            return result
           }
         ).then((result: Errors) => {
           if (
             !result.errorEmail &&
             !result.errorPassword
           ) {
-            return alert('Login Paso');
+            this.props.history.push("/chat")
           }
         });
       };
@@ -54,7 +58,7 @@ class Login extends React.Component<Props, State> {
                     <Input
                         placeholder="Email"
                         style={{paddingTop:10 ,paddingBottom: 10,}}
-                        width='60%'
+                        ContentWidth='60%'
                         error={values.errorEmail}
                         onChange={event =>
                             validator('email', event.target.value!, result => {
@@ -73,19 +77,20 @@ class Login extends React.Component<Props, State> {
                               this.setState({ errorPassword: result, password: event.target.value });
                             })
                           }
-                        width='60%'
+                          ContentWidth='60%'
 
                     />
                     <div style={{display:'flex', flexDirection: 'row' }}>
                         <Button color='primary' variant='outlined' style={{margin:5}}  onClick={()=>changeType('register')} >
                             Registro
                         </Button>
+                      
                         <Button color='primary' variant='outlined' style={{margin:5}}
                             onClick={() => this.handleChange(values)}
                          >
                             Ingresar
                         </Button>
-                      
+    
                     </div>
                 </Form>
 
@@ -100,10 +105,11 @@ export default Login
  export const SessionContainer = styled.div`
     width: 60%;
     min-height: 400px;
-    border: 1px solid;
+    border: 2px solid;
     display: flex;
     flex-direction: column;
     border-color: #00C663;
+   
 
 `
 
@@ -118,6 +124,7 @@ export const Title = styled.div`
     font-family:'Roboto';
     font-weight: 500;
     color:#6C738A;
+
 
 `
 
