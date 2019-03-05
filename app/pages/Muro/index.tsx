@@ -11,8 +11,9 @@ import Content from './Content'
   render() {
     return (
        <Main>
-         <Content chats={this.props.chat}/>
          <ChatForms action={this.props.action}/>
+         <Content chats={this.props.chat}/>
+         
        </Main>
     );
   }
@@ -29,5 +30,6 @@ const mapDispatchToPropss=(dispatch: any)=>({
 export default connect(mapStateToProps , mapDispatchToPropss)(ChatComponent)
 
 const Main = styled.div`
-  flex:1
+  flex:1;
+  width:100%
 `

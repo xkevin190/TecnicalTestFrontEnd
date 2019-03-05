@@ -360,6 +360,7 @@ export function getTheme() {
         root: {
           width: 31,
           height: 31,
+          padding:0
         },
         colorPrimary: {
           color: colors.primary.main,
@@ -538,6 +539,10 @@ export function getTheme() {
         },
       },
       MuiSvgIcon: {
+        root:{
+          width:25,
+          height:20
+        },
         colorAction: {
           color: colors.colorAction,
         },

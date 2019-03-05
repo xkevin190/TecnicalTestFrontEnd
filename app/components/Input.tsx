@@ -19,6 +19,8 @@ type Props = {
     error?: string | boolean
     // tslint:disable-next-line:no-any
     type?: any
+    multiline?:boolean
+    rows?:'1'|'2'|'3'|'4'
   };
   
 

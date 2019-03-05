@@ -34,7 +34,7 @@
     "no-empty-interface": false,
     "no-shadowed-variable": false,
     "no-unused-expression": false,
-    "callable-types": false,
-    "no-any": true
+    "callable-types": false
+    // "no-any": true
   }
 }

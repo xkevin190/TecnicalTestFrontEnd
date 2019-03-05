@@ -1,11 +1,13 @@
-import * as React from 'react'
+import * as React from 'react';
 import { Button } from '@material-ui/core';
 import Input from '../../components/Input';
 import { validator, validateRequire, Errors } from '../../utils/validator';
 import { SessionContainer, Title, Form } from './Login';
+import { User } from '../../store/Session';
 
 type Props = {
   changeType: (value: string) => void;
+  actionRegistro: (user: User) => void;
 };
 
 type State = {
@@ -36,12 +38,12 @@ class Register extends React.Component<Props, State> {
       {
         ...values,
       },
-      (result):Errors => {
+      (result): Errors => {
         this.setState({
           ...values,
           ...result,
         });
-        return result
+        return result;
       }
     ).then((result: Errors) => {
       if (
@@ -50,7 +52,11 @@ class Register extends React.Component<Props, State> {
         !result.errorEmail &&
         !result.errorPassword
       ) {
-        return alert('Registro Paso');
+        this.props.actionRegistro({
+          name: values.name,
+          email: values.email,
+          password: values.password,
+        });
       }
     });
   };

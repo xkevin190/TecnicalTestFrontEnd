@@ -1,30 +1,35 @@
-import * as React from 'react'
+import * as React from 'react';
 import styled, { injectGlobal } from 'styled-components';
-import { createBrowserHistory } from 'history';
-import { Router, Route , Switch } from 'react-router-dom';
-import Session from './pages/session'
- import Muro from './pages/Muro'
- 
+import { Route, Switch, Redirect } from 'react-router';
+import Session from './pages/session';
+import Muro from './pages/Muro';
+import { ApplicationState } from './store/root';
+import { connect } from 'react-redux';
 
-const history = createBrowserHistory();
+type PropsFromState = ReturnType<typeof mapStateToProps>;
 
-export default class Test extends React.Component {
-    render(){
-       return(
-        
-        <ContentContainer>
-          <Router history={history}>
-            <Switch>
-              <Route path="/"  exact component={Session} />
-              <Route path="/" component={Muro} />
-           </Switch>
-          </Router>
-        </ContentContainer>
+const mapStateToProps = (state: ApplicationState) => ({
+  currentUser: state.session.currentUser,
+  router: state.router,
+});
 
-       )
-
+class Test extends React.Component<PropsFromState> {
+  render() {
+    const { currentUser, router } = this.props;
+    if (currentUser && router.location.pathname !== '/dasboard') {
+      return <Redirect to="/dasboard" />;
     }
+    return (
+      <ContentContainer>
+        <Switch>
+          <Route path="/" exact component={Session} />
+          <Route path="/dasboard" component={Muro} />
+        </Switch>
+      </ContentContainer>
+    );
+  }
 }
+export default connect(mapStateToProps)(Test);
 
 injectGlobal`
   html,
@@ -49,7 +54,7 @@ injectGlobal`
 `;
 
 const ContentContainer = styled.main`
-  &&{
+  && {
     background: #fff;
     margin: auto;
     height: 100%;
@@ -57,11 +62,10 @@ const ContentContainer = styled.main`
     display: flex;
     justify-content: center;
     align-items: center;
-    width:1008px;
-    flex-direction:column;
-    @media(max-Width: 1010px) {
-      width:100%;
+    width: 1008px;
+    flex-direction: column;
+    @media (max-width: 1010px) {
+      width: 100%;
     }
-         
   }
-`
+`;
