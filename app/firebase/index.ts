@@ -2,8 +2,9 @@ import { User } from '../store/Session';
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/database';
+import { Chat } from '../store/chat';
 
-var config = {
+const config = {
   apiKey: 'AIzaSyCBW2JmfFybWpNSqqENMhApNBihI-JIU7o',
   authDomain: 'redsocial-51e66.firebaseapp.com',
   databaseURL: 'https://redsocial-51e66.firebaseio.com',
@@ -14,39 +15,57 @@ var config = {
 
 firebase.initializeApp(config);
 const users = firebase.database().ref('users');
+const post = firebase.database().ref('post');
 const auth = firebase.auth();
 
 export default class Firebase {
-  // loginUser = (value, navigation, message , loaded) =>{
-  //     auth.signInWithEmailAndPassword(value.email, value.password)
-  //     .then(()=>{
-  //         loaded()
-  //         navigation.navigate('Sections')
-  //     })
-  //     .catch(function(error) {
+  loginUser = (value: User, cb: (user: User) => void) => {
+    auth.signInWithEmailAndPassword(value.email, value.password!).then(data => {
+      users
+        .child(data.user!.uid)
+        .once('value')
+        .then(user => {
+          cb(user.val());
+        });
+    });
+  };
 
-  //         loaded()
-  //         var errorMessage = error.message;
-  //         message(errorMessage)
-  //     });
-  // }
-
-  registerUser = (value: User, cb: any) => {
+  registerUser = (value: User, cb: (user: User) => void) => {
     auth
       .createUserWithEmailAndPassword(value.email, value.password!)
       .then((data: firebase.auth.UserCredential) => {
-        const user:User ={
-            name: value.name,
-            email: data.user!.email!,
-            id: data.user!.uid!,
-        }
+        const user: User = {
+          name: value.name,
+          email: data.user!.email!,
+          id: data.user!.uid!,
+        };
         users.child(data.user!.uid).set({
-            user
+          ...user,
         });
         return user;
       })
       .then((user: User) => {
         cb(user);
       });
+  };
+
+  newPost = (data: Chat) => {
+    const key = post.push().key;
+    
+    post.child(key!).set({
+      id: key,
+      ...data,
+    });
+  };
+
+  getPost = (callback: (data: Chat[] ) => void) => {
+    post.on('value', post => {
+      const initalData = post!.val()
+       const data:Chat[] | [] = initalData ? Object.values(post!.val()) : [];
+       data.sort((a,b)=>{
+         return b.createAt - a.createAt 
+       })
+       callback(data)
+    });
   };
 }

@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
-import { ChatState, chatReducer as chat } from './chat';
-import {SessionState ,sessionReducer as session } from './Session'
 import { Omit } from 'utility-types';
 import { RouterState } from 'connected-react-router';
+import { ChatState, chatReducer as chat } from './chat';
+import {SessionState ,sessionReducer as session } from './Session'
 
 export interface ApplicationState {
   chat: ChatState;

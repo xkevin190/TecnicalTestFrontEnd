@@ -35,7 +35,7 @@ const composeEnhancers: typeof compose = window.__REDUX_DEVTOOLS_EXTENSION_COMPO
   : compose;
 /* eslint-enable no-underscore-dangle */
 const enhancer = composeEnhancers(applyMiddleware(thunk, router, logger));
-
+/* eslint import/no-anonymous-default-export: [2, {"allowObject": true}] */
 export default {
     history,
      configureStore(initialState: object | void) {

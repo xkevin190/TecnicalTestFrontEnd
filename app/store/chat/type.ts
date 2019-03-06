@@ -1,12 +1,16 @@
 export interface Chat {
+    id?:string
     message: string;
-    name: string;
+    autor: string
+    likes?: [{id:string}]
+    createAt: number;
   }
   
   export interface ChatState {
     currentChat: Chat[] | []
   }
   
-  export  enum SessionActionTypes {
-    CHAT_USER_UPDATE = '@@chat/SET_CHAT',
+  export  enum PostActionTypes {
+    CHAT_USER_UPDATE = '@@post/SET_CHAT',
+    POST_USER_GET = '@@post/GET_POST'
   }

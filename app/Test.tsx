@@ -18,6 +18,8 @@ class Test extends React.Component<PropsFromState> {
     const { currentUser, router } = this.props;
     if (currentUser && router.location.pathname !== '/dasboard') {
       return <Redirect to="/dasboard" />;
+    } else if (!currentUser && router.location.pathname !== '/') {
+      return <Redirect to="/" />;
     }
     return (
       <ContentContainer>

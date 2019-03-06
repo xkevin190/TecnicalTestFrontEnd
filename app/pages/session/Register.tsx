@@ -78,6 +78,7 @@ class Register extends React.Component<Props, State> {
             style={{ paddingTop: 10, paddingBottom: 10 }}
             ContentWidth="60%"
             error={values.errorName}
+            value={values.name}
             onChange={event =>
               validator('name', event.target.value!, result => {
                 this.setState({ errorName: result, name: event.target.value });
@@ -91,6 +92,7 @@ class Register extends React.Component<Props, State> {
             ContentWidth="60%"
             type="email"
             error={values.errorEmail}
+            value={values.email}
             onChange={event =>
               validator('email', event.target.value!, result => {
                 this.setState({ errorEmail: result, email: event.target.value });
@@ -103,6 +105,7 @@ class Register extends React.Component<Props, State> {
             style={{ paddingTop: 10, paddingBottom: 10 }}
             ContentWidth="60%"
             type="password"
+            value={values.password}
             error={values.errorPassword}
             onChange={event =>
               validator('contraseña', event.target.value!, result => {
@@ -116,6 +119,7 @@ class Register extends React.Component<Props, State> {
             style={{ paddingTop: 10, paddingBottom: 10 }}
             ContentWidth="60%"
             type="password"
+            value={values.confirm}
             disabled={values.password.length === 0}
             error={values.errorConfirm}
             onChange={event =>

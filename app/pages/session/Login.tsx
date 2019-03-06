@@ -4,10 +4,12 @@ import { FormControl, Button } from '@material-ui/core';
 import {History} from 'history'
 import {Errors, validator, validateRequire} from '../../utils/validator'
 import Input from '../../components/Input'
+import { User } from '../../store/Session';
  
 type Props = {
     changeType: (register : string )=>void
     history: History
+    actionLogin: (user: User) => void
 }
 
 type State = {
@@ -43,7 +45,10 @@ class Login extends React.Component<Props, State> {
             !result.errorEmail &&
             !result.errorPassword
           ) {
-            this.props.history.push("/chat")
+            this.props.actionLogin({
+              email: values.email,
+              password: values.password,
+            })
           }
         });
       };
@@ -59,6 +64,7 @@ class Login extends React.Component<Props, State> {
                         placeholder="Email"
                         style={{paddingTop:10 ,paddingBottom: 10,}}
                         ContentWidth='60%'
+                        value={values.email}
                         error={values.errorEmail}
                         onChange={event =>
                             validator('email', event.target.value!, result => {
@@ -72,6 +78,7 @@ class Login extends React.Component<Props, State> {
                         style={{paddingTop:10 ,paddingBottom: 10,}}
                         error={values.errorPassword}
                         type='password'
+                        value={values.password}
                         onChange={event =>
                             validator('contraseña', event.target.value!, result => {
                               this.setState({ errorPassword: result, password: event.target.value });

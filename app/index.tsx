@@ -5,9 +5,9 @@ import { Provider } from 'react-redux';
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import Settings from './store/index'
 import {getTheme} from './consts/theme'
-
 import Test from './Test'
 import { ConnectedRouter } from 'connected-react-router';
+
 const store = Settings.configureStore()
 const history = Settings.history
 

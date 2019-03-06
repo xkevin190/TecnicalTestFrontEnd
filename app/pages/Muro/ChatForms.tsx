@@ -6,6 +6,7 @@ import Input from '../../components/Input';
 
 type Props = {
   action: (data: Chat) => void;
+  name?: string;
 };
 
 type State = {
@@ -19,15 +20,22 @@ export default class ChatForms extends React.Component<Props, State> {
   };
 
   dios = () => {
-    this.props.action(this.state);
-    this.setState({message:''})
+    const data:Chat={
+      autor:this.props.name!,
+      message:this.state.message,
+      createAt:Date.now()
+    }
+    this.props.action({
+      ...data
+    })
+    this.setState({ message: '' });
   };
 
   render() {
     return (
       <Card style={{ padding: '0 60px 40px', flex: 1 }}>
         <h1>
-          <Typography style={{ fontSize: 18 }}>Bienvenido Luck SkyWalker</Typography>
+          <Typography style={{ fontSize: 18 }}>{this.props.name}</Typography>
         </h1>
         <Input
           ContentWidth="100%"

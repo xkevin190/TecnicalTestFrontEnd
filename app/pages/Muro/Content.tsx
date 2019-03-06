@@ -3,15 +3,24 @@ import { Card, Typography, Divider } from '@material-ui/core';
 import styled from 'styled-components';
 import { Chat } from '../../store/chat';
 import { ThumbUpAltOutlined, ThumbUp } from '@material-ui/icons';
+import { User } from '../../store/Session';
 
 type Props = {
   chats: Chat[];
+  user:User
+  getData:()=>void
 };
 export default class ChatForms extends React.Component<Props> {
+
   state = {
     like: 0,
     liked: true,
   };
+
+  componentDidMount=()=>{
+    this.props.getData()
+  }
+
   render() {
     const Icon = this.state.liked ? IconUp : IconOFF;
     return (
@@ -27,7 +36,7 @@ export default class ChatForms extends React.Component<Props> {
                   style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}
                 >
                   <Typography style={{ fontSize: 15, fontWeight: 'bold' }}>
-                    Autor: {chat.name}
+                    Autor: {chat.autor}
                   </Typography>
 
                   <div style={{ display: 'flex', alignItems: 'center' }}>
